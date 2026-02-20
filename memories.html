@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memories — Didi & Jiju</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+
+    <audio id="bgMusic" preload="auto" loop>
+      <source src="./assets/audio/song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <header class="topbar">
+      <a class="brand" href="./">
+        <span class="brandDot"></span>
+        <span>Back</span>
+      </a>
+
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a class="active" href="./memories.html">Memories</a>
+        <a href="./wishes.html">Wishes</a>
+      </nav>
+
+      <button class="musicBtn" id="musicBtn" aria-label="Toggle music">
+        <span id="musicIcon">♪</span>
+        <span id="musicText">Tap to Play</span>
+      </button>
+    </header>
+
+    <main class="container">
+      <section class="glass pageHead">
+        <h1>Memories 📸</h1>
+        <p>Click any photo to open slideshow. Swipe/Arrow keys also work.</p>
+      </section>
+
+      <section class="gallery" id="gallery"></section>
+
+      <!-- Lightbox -->
+      <div class="lightbox" id="lightbox" aria-hidden="true">
+        <div class="lightboxInner">
+          <button class="lbClose" id="lbClose" aria-label="Close">✕</button>
+          <button class="lbNav lbPrev" id="lbPrev" aria-label="Previous">
+            ‹
+          </button>
+          <img id="lbImg" alt="Memory photo" />
+          <button class="lbNav lbNext" id="lbNext" aria-label="Next">›</button>
+          <div class="lbHint">Use ← → keys • Esc to close</div>
+        </div>
+      </div>
+
+      <canvas id="confetti"></canvas>
+    </main>
+
+    <script src="./assets/js/app.js"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        window.ANNIV.init({
+          page: "memories",
+          imagesCount: 11,
+        });
+      });
+    </script>
+  </body>
+</html>

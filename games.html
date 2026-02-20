@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Games — Pia & Rohit</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+
+    <audio id="bgMusic" preload="auto" loop>
+      <source src="./assets/audio/song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <header class="topbar">
+      <a class="brand" href="./">
+        <span class="brandDot"></span>
+        <span>Back</span>
+      </a>
+
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="./memories.html">Memories</a>
+        <a href="./wishes.html">Wishes</a>
+        <a class="active" href="./games.html">Games</a>
+      </nav>
+
+      <button class="musicBtn" id="musicBtn" aria-label="Toggle music">
+        <span id="musicIcon">♪</span>
+        <span id="musicText">Tap to Play</span>
+      </button>
+    </header>
+
+    <main class="container">
+      <section class="glass pageHead">
+        <h1>Games 🎮</h1>
+        <p>Play together — light, fun, and made for Pia & Rohit 💖</p>
+      </section>
+
+      <!-- Tabs -->
+      <section class="glass gamesTabs">
+        <button class="tabBtn active" data-tab="quiz">
+          How Well Do You Know Each Other?
+        </button>
+        <button class="tabBtn" data-tab="wheel">Spin the Love Wheel</button>
+        <button class="tabBtn" data-tab="guess">Guess the Year</button>
+        <button class="tabBtn" data-tab="puzzle">Mini Puzzle</button>
+      </section>
+
+      <!-- QUIZ -->
+      <section id="tab-quiz" class="glass gamePanel show">
+        <div class="panelHead">
+          <h2>How Well Do You Know Each Other? 🤍</h2>
+          <p>First Pia answers, then Rohit answers — see your match %.</p>
+        </div>
+
+        <div class="quizModes">
+          <button class="modeBtn active" data-mode="pia">Pia’s Answers</button>
+          <button class="modeBtn" data-mode="rohit">Rohit’s Answers</button>
+        </div>
+
+        <div id="quizBox"></div>
+
+        <div class="panelActions">
+          <button class="btn primary" id="quizSubmit">Show Result</button>
+          <button class="btn" id="quizReset">Reset</button>
+          <div class="scoreText" id="quizScore"></div>
+        </div>
+      </section>
+
+      <!-- WHEEL -->
+      <section id="tab-wheel" class="glass gamePanel">
+        <div class="panelHead">
+          <h2>Spin the Love Wheel 💞</h2>
+          <p>Tap spin — do what it chooses 😄</p>
+        </div>
+
+        <div class="wheelWrap">
+          <div class="wheelPointer" aria-hidden="true">▼</div>
+          <div class="wheel" id="wheel"></div>
+        </div>
+
+        <div class="panelActions">
+          <button class="btn primary" id="spinBtn">Spin</button>
+          <button class="btn" id="spinReset">Reset</button>
+          <div class="scoreText" id="spinResult"></div>
+        </div>
+      </section>
+
+      <!-- GUESS THE YEAR -->
+      <section id="tab-guess" class="glass gamePanel">
+        <div class="panelHead">
+          <h2>Guess the Year 📸</h2>
+          <p>Pick Year 1–8 for the shown photo.</p>
+        </div>
+
+        <div class="guessWrap">
+          <div class="guessImgFrame">
+            <img id="guessImg" alt="Guess the year image" />
+          </div>
+
+          <div class="guessControls">
+            <div class="yearGrid" id="yearGrid"></div>
+
+            <div class="panelActions">
+              <button class="btn primary" id="guessNext">Next Photo</button>
+              <div class="scoreText" id="guessMsg"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PUZZLE -->
+      <section id="tab-puzzle" class="glass gamePanel">
+        <div class="panelHead">
+          <h2>Mini Puzzle 🧩</h2>
+          <p>Slide tiles to complete the photo (3×3).</p>
+        </div>
+
+        <div class="puzzleRow">
+          <div
+            class="puzzleBoard"
+            id="puzzleBoard"
+            aria-label="Sliding puzzle board"
+          ></div>
+
+          <div class="puzzleSide">
+            <div class="miniHint glass">
+              <h3>Tip</h3>
+              <p>Click a tile next to the empty space to move it.</p>
+            </div>
+
+            <div class="panelActions">
+              <button class="btn primary" id="puzzleShuffle">Shuffle</button>
+              <button class="btn" id="puzzleChange">Change Photo</button>
+              <div class="scoreText" id="puzzleMsg"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <canvas id="confetti"></canvas>
+    </main>
+
+    <script src="./assets/js/app.js"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        window.ANNIV.init({ page: "games", imagesCount: 11 });
+      });
+    </script>
+  </body>
+</html>
