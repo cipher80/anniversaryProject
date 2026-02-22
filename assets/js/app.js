@@ -254,22 +254,22 @@
 //     const quiz = [
 //       {
 //         q: "Who takes more time to get ready?",
-//         a: ["Pia", "Rohit", "Both", "Depends"],
+//         a: ["Priya", "Riddhikant", "Both", "Depends"],
 //         correct: 2,
 //       },
 //       {
 //         q: "Who is more likely to plan a surprise?",
-//         a: ["Pia", "Rohit", "Both", "Depends"],
+//         a: ["Priya", "Riddhikant", "Both", "Depends"],
 //         correct: 2,
 //       },
 //       {
 //         q: "Who says ‘sorry’ first after a small fight?",
-//         a: ["Pia", "Rohit", "Both", "Depends"],
+//         a: ["Priya", "Riddhikant", "Both", "Depends"],
 //         correct: 3,
 //       },
 //       {
 //         q: "Who is more romantic?",
-//         a: ["Pia", "Rohit", "Both", "Depends"],
+//         a: ["Priya", "Riddhikant", "Both", "Depends"],
 //         correct: 2,
 //       },
 //       {
@@ -284,7 +284,7 @@
 //       },
 //       {
 //         q: "Who is more patient?",
-//         a: ["Pia", "Rohit", "Both", "Depends"],
+//         a: ["Priya", "Riddhikant", "Both", "Depends"],
 //         correct: 2,
 //       },
 //       {
@@ -797,42 +797,48 @@
       });
     });
 
-    // ---------------- 1) QUIZ (Pia vs Rohit) ----------------
+    // ---------------- 1) QUIZ (Priya vs Riddhikant) ----------------
     const quizBox = $("quizBox");
     const quizSubmit = $("quizSubmit");
     const quizReset = $("quizReset");
     const quizScore = $("quizScore");
 
     const modeBtns = document.querySelectorAll(".modeBtn");
-    let currentMode = "pia"; // 'pia' | 'rohit'
-    const answers = { pia: {}, rohit: {} }; // { qIndex: optionIndex }
+    let currentMode = "Priya"; // 'Priya' | 'Riddhikant'
+    const answers = { Priya: {}, Riddhikant: {} }; // { qIndex: optionIndex }
 
     const quiz = [
       {
         q: "Who takes more time to get ready?",
-        a: ["Pia", "Rohit", "Both", "Depends"],
+        a: ["Priya", "Riddhikant", "Both", "Depends"],
       },
       {
         q: "Who is more likely to plan a surprise?",
-        a: ["Pia", "Rohit", "Both", "Depends"],
+        a: ["Priya", "Riddhikant", "Both", "Depends"],
       },
       {
         q: "Who says ‘sorry’ first after a small fight?",
-        a: ["Pia", "Rohit", "Both", "Depends"],
+        a: ["Priya", "Riddhikant", "Both", "Depends"],
       },
-      { q: "Who is more romantic?", a: ["Pia", "Rohit", "Both", "Depends"] },
+      {
+        q: "Who is more romantic?",
+        a: ["Priya", "Riddhikant", "Both", "Depends"],
+      },
       {
         q: "Best kind of date?",
         a: ["Movie", "Dinner", "Long drive", "Stay home + talk"],
       },
-      { q: "Who is more patient?", a: ["Pia", "Rohit", "Both", "Depends"] },
+      {
+        q: "Who is more patient?",
+        a: ["Priya", "Riddhikant", "Both", "Depends"],
+      },
       {
         q: "Your perfect weekend is…",
         a: ["Outing", "Shopping", "Family gathering", "Rest + fun"],
       },
       {
         q: "Who is the better gift-giver?",
-        a: ["Pia", "Rohit", "Both", "Depends"],
+        a: ["Priya", "Riddhikant", "Both", "Depends"],
       },
     ];
 
@@ -867,7 +873,7 @@
       // save on change
       quizBox.querySelectorAll('input[type="radio"]').forEach((radio) => {
         radio.addEventListener("change", (e) => {
-          const fullName = e.target.name; // q0-pia
+          const fullName = e.target.name; // q0-Priya
           const qIndex = Number(fullName.split("-")[0].replace("q", ""));
           answers[currentMode][qIndex] = Number(e.target.value);
         });
@@ -891,8 +897,8 @@
       let filled = 0;
       let same = 0;
       for (let i = 0; i < quiz.length; i++) {
-        const a = answers.pia[i];
-        const b = answers.rohit[i];
+        const a = answers.Priya[i];
+        const b = answers.Riddhikant[i];
         if (typeof a === "number" && typeof b === "number") {
           filled++;
           if (a === b) same++;
@@ -904,15 +910,15 @@
 
     quizSubmit &&
       quizSubmit.addEventListener("click", () => {
-        const piaAnswered = Object.keys(answers.pia).length;
-        const rohitAnswered = Object.keys(answers.rohit).length;
+        const PriyaAnswered = Object.keys(answers.Priya).length;
+        const RiddhikantAnswered = Object.keys(answers.Riddhikant).length;
 
         const { filled, same, pct } = calcMatch();
 
         if (quizScore) {
-          if (!piaAnswered || !rohitAnswered) {
+          if (!PriyaAnswered || !RiddhikantAnswered) {
             quizScore.textContent =
-              "First answer in both sections (Pia + Rohit), then tap ‘Show Result’.";
+              "First answer in both sections (Priya + Riddhikant), then tap ‘Show Result’.";
           } else {
             quizScore.textContent =
               `Match: ${same}/${filled} same answers • ${pct}% compatibility 💖` +
@@ -927,10 +933,10 @@
 
     quizReset &&
       quizReset.addEventListener("click", () => {
-        answers.pia = {};
-        answers.rohit = {};
+        answers.Priya = {};
+        answers.Riddhikant = {};
         if (quizScore) quizScore.textContent = "";
-        setMode("pia");
+        setMode("Priya");
       });
 
     // initial render
