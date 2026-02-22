@@ -27,15 +27,15 @@
       </nav>
 
       <button class="musicBtn" id="musicBtn" aria-label="Toggle music">
-        <span id="musicIcon">♪</span>
+        <span id="musicIcon">â™ª</span>
         <span id="musicText">Tap to Play</span>
       </button>
     </header>
 
     <main class="container">
       <section class="glass pageHead">
-        <h1>Games 🎮</h1>
-        <p>Play together — light, fun, and made for Priya & Riddhikant 💖</p>
+        <h1>Games</h1>
+        <p>Play together have fun, and made for Priya & Riddhikant ’–</p>
       </section>
 
       <!-- Tabs -->
@@ -45,24 +45,23 @@
         </button>
         <button class="tabBtn" data-tab="wheel">Spin the Love Wheel</button>
         <button class="tabBtn" data-tab="guess">Guess the Year</button>
-        <button class="tabBtn" data-tab="puzzle">Mini Puzzle</button>
+        <!-- <button class="tabBtn" data-tab="puzzle">Mini Puzzle</button> -->
+        <button class="tabBtn" data-tab="tictactoe">Love Tic-Tac-Toe</button>
       </section>
 
       <!-- QUIZ -->
       <section id="tab-quiz" class="glass gamePanel show">
         <div class="panelHead">
-          <h2>How Well Do You Know Each Other? 🤍</h2>
-          <p>
-            First Priya answers, then Riddhikant answers — see your match %.
-          </p>
+          <h2>How Well Do You Know Each Other?</h2>
+          <p>First Priya answers, then Riddhikant answers see your match %.</p>
         </div>
 
         <div class="quizModes">
           <button class="modeBtn active" data-mode="Priya">
-            Priya’s Answers
+            Priya's Answers
           </button>
           <button class="modeBtn" data-mode="Riddhikant">
-            Riddhikant’s Answers
+            Riddhikant's Answers
           </button>
         </div>
 
@@ -83,7 +82,7 @@
         </div>
 
         <div class="wheelWrap">
-          <div class="wheelPointer" aria-hidden="true">▼</div>
+          <div class="wheelPointer" aria-hidden="true"></div>
           <div class="wheel" id="wheel"></div>
         </div>
 
@@ -97,8 +96,8 @@
       <!-- GUESS THE YEAR -->
       <section id="tab-guess" class="glass gamePanel">
         <div class="panelHead">
-          <h2>Guess the Year 📸</h2>
-          <p>Pick Year 1–8 for the shown photo.</p>
+          <h2>Guess the Year ðŸ“¸</h2>
+          <p>Pick the real year for the shown photo.</p>
         </div>
 
         <div class="guessWrap">
@@ -118,9 +117,9 @@
       </section>
 
       <!-- PUZZLE -->
-      <section id="tab-puzzle" class="glass gamePanel">
+      <!-- <section id="tab-puzzle" class="glass gamePanel">
         <div class="panelHead">
-          <h2>Mini Puzzle 🧩</h2>
+          <h2>Mini Puzzle</h2>
           <p>Slide tiles to complete the photo (3×3).</p>
         </div>
 
@@ -144,6 +143,34 @@
             </div>
           </div>
         </div>
+      </section> -->
+
+      <section id="tab-tictactoe" class="glass gamePanel">
+        <div class="panelHead">
+          <h2>Love Tic-Tac-Toe ❤️</h2>
+          <p>Priya vs Riddhikant — take turns and win the heart!</p>
+        </div>
+
+        <div class="tttWrap">
+          <div
+            class="tttBoard"
+            id="tttBoard"
+            aria-label="Tic tac toe board"
+          ></div>
+
+          <div class="tttSide">
+            <div class="miniHint glass">
+              <h3>Turn</h3>
+              <p id="tttTurn">Pia (X) starts</p>
+            </div>
+
+            <div class="panelActions">
+              <button class="btn primary" id="tttReset">Reset</button>
+              <button class="btn" id="tttSwap">Swap Players</button>
+              <div class="scoreText" id="tttMsg"></div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <canvas id="confetti"></canvas>
@@ -152,7 +179,7 @@
     <script src="./assets/js/app.js"></script>
     <script>
       window.addEventListener("DOMContentLoaded", () => {
-        window.ANNIV.init({ page: "games", imagesCount: 11 });
+        window.ANNIV.init({ page: "games", imagesCount: 12 });
       });
     </script>
   </body>

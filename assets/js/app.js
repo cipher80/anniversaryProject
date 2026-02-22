@@ -562,6 +562,25 @@
 (() => {
   const pad2 = (n) => String(n).padStart(2, "0");
   const $ = (id) => document.getElementById(id);
+  const IMAGE_EXT_BY_INDEX = { 11: "png", 12: "png" };
+  const imagePath = (idx) => {
+    const ext = IMAGE_EXT_BY_INDEX[idx] || "jpg";
+    return `assets/img/${pad2(idx)}.${ext}`;
+  };
+  const IMAGE_YEAR_BY_INDEX = {
+    1: 2021,
+    2: 2023,
+    3: 2025,
+    4: 2024,
+    5: 2026,
+    6: 2025,
+    7: 2022,
+    8: 2018,
+    9: 2018,
+    10: 2025,
+    11: 2023,
+    12: 2018,
+  };
 
   // ---- Slow Snowfall ----
   function startSnow(canvas) {
@@ -700,7 +719,7 @@
     let i = 1;
     setInterval(() => {
       i = (i % imagesCount) + 1;
-      heroImg.src = `assets/img/${pad2(i)}.jpg`;
+      heroImg.src = imagePath(i);
     }, 2600);
   }
 
@@ -718,7 +737,7 @@
     let current = 1;
     const open = (idx) => {
       current = idx;
-      if (lbImg) lbImg.src = `assets/img/${pad2(current)}.jpg`;
+      if (lbImg) lbImg.src = imagePath(current);
       if (lightbox) {
         lightbox.classList.add("show");
         lightbox.setAttribute("aria-hidden", "false");
@@ -740,7 +759,7 @@
       tile.tabIndex = 0;
 
       const img = document.createElement("img");
-      img.src = `assets/img/${pad2(i)}.jpg`;
+      img.src = imagePath(i);
       img.alt = `Memory ${i}`;
 
       const badge = document.createElement("div");
@@ -782,7 +801,7 @@
       quiz: document.getElementById("tab-quiz"),
       wheel: document.getElementById("tab-wheel"),
       guess: document.getElementById("tab-guess"),
-      puzzle: document.getElementById("tab-puzzle"),
+      tictactoe: document.getElementById("tab-tictactoe"),
     };
 
     tabBtns.forEach((b) => {
@@ -949,18 +968,71 @@
     const spinResult = $("spinResult");
 
     const wheelTasks = [
-      "Say 3 things you love about each other ❤️",
-      "Take a selfie together 📸",
-      "Dance for 30 seconds 💃🕺",
-      "Share your best memory from the last year ✨",
-      "Give a surprise hug 🤗",
-      "Compliment each other (5 lines) 💬",
-      "Plan a short date this week 🗓️",
-      "Promise one new habit together 🌸",
+      "Say 3 things you love about each other",
+      "Take a selfie together",
+      "Dance for 30 seconds",
+      "Share your best memory from last year",
+      "Give a surprise hug",
+      "Compliment each other (5 lines)",
+      "Plan a short date this week",
+      "Promise one new habit together",
+    ];
+    const wheelLabels = [
+      "3 Things",
+      "Selfie",
+      "Dance",
+      "Best Memory",
+      "Hug",
+      "Compliments",
+      "Date Plan",
+      "New Habit",
+    ];
+    const wheelColors = [
+      "#ff5fa2",
+      "#ff8a5b",
+      "#ffd166",
+      "#8be28b",
+      "#45d4ff",
+      "#6d93ff",
+      "#a88bff",
+      "#ff79c6",
     ];
 
     let spinning = false;
     let wheelAngle = 0;
+
+    const renderWheelFace = () => {
+      if (!wheel) return;
+      const slice = 360 / wheelTasks.length;
+      const gradient = wheelColors
+        .map((color, idx) => {
+          const start = idx * slice;
+          const end = (idx + 1) * slice;
+          return `${color} ${start}deg ${end}deg`;
+        })
+        .join(", ");
+      wheel.style.background = `conic-gradient(from -90deg, ${gradient})`;
+
+      wheel.innerHTML = "";
+      const labelsLayer = document.createElement("div");
+      labelsLayer.className = "wheelLabels";
+
+      wheelLabels.forEach((label, idx) => {
+        const node = document.createElement("div");
+        const angle = idx * slice + slice / 2;
+        node.className = "wheelLabel";
+        node.textContent = label;
+        node.style.transform =
+          `translate(-50%, -50%) rotate(${angle}deg) ` +
+          `translateY(-118px) rotate(${-angle}deg)`;
+        labelsLayer.appendChild(node);
+      });
+
+      const center = document.createElement("div");
+      center.className = "wheelCenter";
+      wheel.appendChild(labelsLayer);
+      wheel.appendChild(center);
+    };
 
     const spin = () => {
       if (!wheel || spinning) return;
@@ -970,7 +1042,6 @@
       const slice = 360 / wheelTasks.length;
       const targetAngle = 360 * 5 + (360 - (pick * slice + slice / 2));
       wheelAngle = targetAngle;
-
       wheel.style.transform = `rotate(${wheelAngle}deg)`;
 
       setTimeout(() => {
@@ -987,6 +1058,7 @@
         wheel.style.transform = "rotate(0deg)";
         if (spinResult) spinResult.textContent = "";
       });
+    renderWheelFace();
 
     // ---------------- 3) GUESS THE YEAR ----------------
     const guessImg = $("guessImg");
@@ -994,18 +1066,24 @@
     const guessMsg = $("guessMsg");
     const yearGrid = $("yearGrid");
 
-    const yearForImageIndex = (imgIdx) => ((imgIdx - 1) % 8) + 1;
+    const yearForImageIndex = (imgIdx) => IMAGE_YEAR_BY_INDEX[imgIdx];
+    const availableYears = [
+      ...new Set(
+        Object.entries(IMAGE_YEAR_BY_INDEX)
+          .filter(([idx]) => Number(idx) <= imagesCount)
+          .map(([, year]) => year),
+      ),
+    ].sort((a, b) => a - b);
     let currentGuessImg = 1;
 
     const loadGuess = () => {
       currentGuessImg = Math.floor(Math.random() * imagesCount) + 1;
-      if (guessImg) guessImg.src = `assets/img/${pad2(currentGuessImg)}.jpg`;
+      if (guessImg) guessImg.src = imagePath(currentGuessImg);
       if (guessMsg) guessMsg.textContent = "";
     };
 
     if (yearGrid) {
-      yearGrid.innerHTML = Array.from({ length: 8 }, (_, i) => {
-        const yr = i + 1;
+      yearGrid.innerHTML = availableYears.map((yr) => {
         return `<button class="yearBtn" data-year="${yr}">Year ${yr}</button>`;
       }).join("");
 
@@ -1014,6 +1092,10 @@
         if (!btn) return;
         const chosenYear = Number(btn.dataset.year);
         const correctYear = yearForImageIndex(currentGuessImg);
+        if (!correctYear) {
+          if (guessMsg) guessMsg.textContent = "Year not mapped for this image yet.";
+          return;
+        }
         if (guessMsg) {
           guessMsg.textContent =
             chosenYear === correctYear
@@ -1025,112 +1107,120 @@
 
     guessNext && guessNext.addEventListener("click", loadGuess);
     loadGuess();
+    // ---------------- 4) LOVE TIC-TAC-TOE ----------------
+    const tttBoard = $("tttBoard");
+    const tttTurn = $("tttTurn");
+    const tttReset = $("tttReset");
+    const tttSwap = $("tttSwap");
+    const tttMsg = $("tttMsg");
 
-    // ---------------- 4) MINI PUZZLE ----------------
-    const puzzleBoard = $("puzzleBoard");
-    const puzzleShuffle = $("puzzleShuffle");
-    const puzzleChange = $("puzzleChange");
-    const puzzleMsg = $("puzzleMsg");
+    if (tttBoard) {
+      let board = Array(9).fill("");
+      let current = "X";
+      let locked = false;
+      const playerFor = { X: "Pia", O: "Rohit" };
 
-    const size = 3;
-    const emptyId = size * size - 1;
-    let puzzleImgIdx = Math.floor(Math.random() * imagesCount) + 1;
-    let state = [];
+      const WIN_LINES = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
 
-    const setTileStyles = () => {
-      if (!puzzleBoard) return;
-      const rect = puzzleBoard.getBoundingClientRect();
-      const boardPx = Math.floor(rect.width);
-      puzzleBoard.querySelectorAll(".pTile").forEach((tile) => {
-        tile.style.backgroundSize = `${boardPx}px ${boardPx}px`;
-      });
-    };
+      const setTurnText = () => {
+        if (tttTurn) tttTurn.textContent = `${playerFor[current]} (${current}) turn`;
+      };
 
-    const renderPuzzle = () => {
-      if (!puzzleBoard) return;
-      puzzleBoard.innerHTML = "";
-      const imgUrl = `assets/img/${pad2(puzzleImgIdx)}.jpg`;
-
-      state.forEach((tileId, pos) => {
-        const tile = document.createElement("div");
-        tile.className = "pTile";
-        tile.dataset.pos = String(pos);
-        tile.dataset.tileId = String(tileId);
-
-        if (tileId === emptyId) {
-          tile.classList.add("empty");
-        } else {
-          const r = Math.floor(tileId / size);
-          const c = tileId % size;
-          tile.style.backgroundImage = `url(${imgUrl})`;
-          tile.style.backgroundPosition = `${(-c * 100) / (size - 1)}% ${(-r * 100) / (size - 1)}%`;
+      const getWinnerLine = () => {
+        for (const [a, b, c] of WIN_LINES) {
+          if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            return [a, b, c];
+          }
         }
-        puzzleBoard.appendChild(tile);
+        return null;
+      };
+
+      const paintWin = (line) => {
+        const cells = tttBoard.querySelectorAll(".tttCell");
+        line.forEach((idx) => {
+          if (!cells[idx]) return;
+          cells[idx].style.background = "rgba(255, 119, 183, 0.22)";
+          cells[idx].style.borderColor = "rgba(255, 119, 183, 0.5)";
+        });
+      };
+
+      const renderTtt = () => {
+        tttBoard.innerHTML = "";
+        board.forEach((mark, idx) => {
+          const cell = document.createElement("button");
+          cell.type = "button";
+          cell.className = "tttCell";
+          cell.dataset.idx = String(idx);
+          cell.textContent = mark;
+          cell.setAttribute("aria-label", `Cell ${idx + 1}`);
+          tttBoard.appendChild(cell);
+        });
+      };
+
+      const resetTtt = () => {
+        board = Array(9).fill("");
+        current = "X";
+        locked = false;
+        if (tttMsg) tttMsg.textContent = "";
+        renderTtt();
+        setTurnText();
+      };
+
+      tttBoard.addEventListener("click", (e) => {
+        const cell = e.target.closest(".tttCell");
+        if (!cell || locked) return;
+        const idx = Number(cell.dataset.idx);
+        if (Number.isNaN(idx) || board[idx]) return;
+
+        board[idx] = current;
+        renderTtt();
+
+        const winnerLine = getWinnerLine();
+        if (winnerLine) {
+          locked = true;
+          paintWin(winnerLine);
+          if (tttTurn) tttTurn.textContent = `${playerFor[current]} (${current}) wins!`;
+          if (tttMsg) tttMsg.textContent = "Winner!";
+          return;
+        }
+
+        if (board.every((x) => x)) {
+          locked = true;
+          if (tttTurn) tttTurn.textContent = "Draw game";
+          if (tttMsg) tttMsg.textContent = "It's a draw. Tap Reset.";
+          return;
+        }
+
+        current = current === "X" ? "O" : "X";
+        setTurnText();
       });
 
-      setTileStyles();
-    };
+      tttReset && tttReset.addEventListener("click", resetTtt);
+      tttSwap &&
+        tttSwap.addEventListener("click", () => {
+          [playerFor.X, playerFor.O] = [playerFor.O, playerFor.X];
+          resetTtt();
+          if (tttMsg) {
+            tttMsg.textContent = `Swapped: ${playerFor.X} is X, ${playerFor.O} is O`;
+          }
+        });
 
-    const neighbors = (pos) => {
-      const r = Math.floor(pos / size);
-      const c = pos % size;
-      const n = [];
-      if (r > 0) n.push(pos - size);
-      if (r < size - 1) n.push(pos + size);
-      if (c > 0) n.push(pos - 1);
-      if (c < size - 1) n.push(pos + 1);
-      return n;
-    };
-
-    const isSolved = () => state.every((v, i) => v === i);
-
-    const move = (pos) => {
-      const emptyPos = state.indexOf(emptyId);
-      if (!neighbors(pos).includes(emptyPos)) return;
-      [state[pos], state[emptyPos]] = [state[emptyPos], state[pos]];
-      renderPuzzle();
-      if (puzzleMsg) puzzleMsg.textContent = isSolved() ? "Completed! 🎉" : "";
-    };
-
-    const shuffle = (steps = 90) => {
-      state = Array.from({ length: size * size }, (_, i) => i);
-      let emptyPos = emptyId;
-
-      for (let i = 0; i < steps; i++) {
-        const opts = neighbors(emptyPos);
-        const pick = opts[Math.floor(Math.random() * opts.length)];
-        [state[pick], state[emptyPos]] = [state[emptyPos], state[pick]];
-        emptyPos = pick;
-      }
-      if (puzzleMsg) puzzleMsg.textContent = "";
-      renderPuzzle();
-    };
-
-    if (puzzleBoard) {
-      puzzleBoard.addEventListener("click", (e) => {
-        const tile = e.target.closest(".pTile");
-        if (!tile) return;
-        const pos = Number(tile.dataset.pos);
-        if (Number(tile.dataset.tileId) === emptyId) return;
-        move(pos);
-      });
-      window.addEventListener("resize", () => setTileStyles());
+      resetTtt();
     }
-
-    puzzleShuffle &&
-      puzzleShuffle.addEventListener("click", () => shuffle(100));
-    puzzleChange &&
-      puzzleChange.addEventListener("click", () => {
-        puzzleImgIdx = Math.floor(Math.random() * imagesCount) + 1;
-        shuffle(95);
-      });
-
-    shuffle(95);
   }
 
   // ---- Public API ----
   window.ANNIV = {
-    init({ page, imagesCount = 11 }) {
+    init({ page, imagesCount = 12 }) {
       setupMusic();
       startSnow($("confetti"));
 
