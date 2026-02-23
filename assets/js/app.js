@@ -562,7 +562,7 @@
 (() => {
   const pad2 = (n) => String(n).padStart(2, "0");
   const $ = (id) => document.getElementById(id);
-  const IMAGE_EXT_BY_INDEX = { 11: "png", 12: "png" };
+  const IMAGE_EXT_BY_INDEX = { 11: "png", 12: "png", 13: "png" };
   const imagePath = (idx) => {
     const ext = IMAGE_EXT_BY_INDEX[idx] || "jpg";
     return `assets/img/${pad2(idx)}.${ext}`;
