@@ -662,6 +662,8 @@
     if (params.get("preview") === "1") return false;
 
     if (now >= unlockAt) return false;
+    document.documentElement.classList.add("lock-active");
+    document.body.classList.add("lock-active");
 
     const unlockDateText = unlockAt.toLocaleDateString(undefined, {
       day: "numeric",
@@ -696,6 +698,8 @@
       const diff = unlockAt.getTime() - Date.now();
       if (diff <= 0) {
         if (timerId) clearInterval(timerId);
+        document.documentElement.classList.remove("lock-active");
+        document.body.classList.remove("lock-active");
         gate.remove();
         window.location.reload();
         return;
