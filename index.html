@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Anniversary — Didi & Jiju</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <meta name="theme-color" content="#0b0f1a" />
+  </head>
+  <body>
+    <!-- Background glow -->
+    <div class="bg"></div>
+
+    <!-- Music -->
+    <audio id="bgMusic" preload="auto" loop>
+      <source src="./assets/audio/song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brandDot"></span>
+        <span>8th Anniversary</span>
+      </div>
+
+      <button class="musicBtn" id="musicBtn" aria-label="Toggle music">
+        <span id="musicIcon">♪</span>
+        <span id="musicText">Tap to Play</span>
+      </button>
+      <button class="musicBtn" id="musicBtn" aria-label="Toggle music">
+        <a class="btn" href="./games.html">Play Games</a>
+      </button>
+    </header>
+
+    <main class="container">
+      <section class="hero glass">
+        <div class="heroLeft">
+          <p class="tag">For our favourite couple</p>
+          <h1>
+            Happy Wedding Anniversary
+            <span class="grad">Priya & Riddhikant</span>
+          </h1>
+          <p class="sub typeLine">
+            <span id="typeHero" class="typeText"></span
+            ><span class="caret" aria-hidden="true"></span>
+          </p>
+
+          <p class="dateLine">24 Feb • 8th Anniversary ✨</p>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="./memories.html">Open Memories</a>
+            <a class="btn" href="./wishes.html">Read Wishes</a>
+          </div>
+
+          <div class="miniNote">
+            <div class="pill">✨ Love</div>
+            <div class="pill">🏡 Togetherness</div>
+            <div class="pill">🌸 Blessings</div>
+          </div>
+        </div>
+
+        <div class="heroRight">
+          <div class="photoCard">
+            <div class="photoFrame">
+              <img
+                id="heroImg"
+                src="./assets/img/01.jpg"
+                alt="Didi and Jiju photo"
+              />
+            </div>
+            <div class="photoCaption">
+              <div class="captionTitle">A small surprise</div>
+              <div class="captionSub">Made with love by your family ❤️</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="glass info">
+        <h2>Today’s Promise</h2>
+        <p class="promiseLine">
+          “<span id="typePromise" class="typeText"></span>”
+        </p>
+
+        <div class="navCards">
+          <a class="navCard" href="./memories.html">
+            <div class="navIcon">📸</div>
+            <div>
+              <div class="navTitle">Memories</div>
+              <div class="navSub">Gallery + slideshow</div>
+            </div>
+          </a>
+
+          <a class="navCard" href="./wishes.html">
+            <div class="navIcon">💌</div>
+            <div>
+              <div class="navTitle">Wishes</div>
+              <div class="navSub">Family messages</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <canvas id="confetti"></canvas>
+    </main>
+
+    <script src="./assets/js/app.js"></script>
+    <script>
+      // rotate hero image quickly for life
+      window.addEventListener("DOMContentLoaded", () => {
+        window.ANNIV.init({
+          page: "home",
+          imagesCount: 12,
+        });
+      });
+    </script>
+  </body>
+</html>

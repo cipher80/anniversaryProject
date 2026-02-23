@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wishes — Didi & Jiju</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+
+    <audio id="bgMusic" preload="auto" loop>
+      <source src="./assets/audio/song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <header class="topbar">
+      <a class="brand" href="./">
+        <span class="brandDot"></span>
+        <span>Back</span>
+      </a>
+
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="./memories.html">Memories</a>
+        <a class="active" href="./wishes.html">Wishes</a>
+      </nav>
+
+      <button class="musicBtn" id="musicBtn" aria-label="Toggle music">
+        <span id="musicIcon">♪</span>
+        <span id="musicText">Tap to Play</span>
+      </button>
+    </header>
+
+    <main class="container">
+      <section class="glass pageHead">
+        <h1>Family Wishes 💌</h1>
+        <p>A few words from all of us — with lots of love.</p>
+      </section>
+
+      <section class="wishesGrid">
+        <article class="wishCard glass">
+          <h3>Message 1</h3>
+          <p>
+            On your beautiful 8th Wedding Anniversary, we want to say how truly
+            blessed we feel to see your love grow stronger with each passing
+            year. These eight years are not just a number, but a journey filled
+            with trust, laughter, understanding, and countless precious
+            memories. May your bond always remain unbreakable, your hearts
+            always stay connected, and your home always be filled with happiness
+            and positivity. May God bless you both with endless love, success,
+            good health, and togetherness for a lifetime.
+          </p>
+        </article>
+
+        <article class="wishCard glass">
+          <h3>Message 2</h3>
+          <p>
+            So proud of you both — amazing couple and wonderful parents! Thank
+            you for giving us the joy of becoming Mosi and Mama. Best
+            Anniversary wishes!
+          </p>
+        </article>
+
+        <article class="wishCard glass">
+          <h3>Extra Love</h3>
+          <p>
+            Your love feels like home — calm, warm, and always welcoming. May
+            your life together keep getting sweeter every year. ❤️
+          </p>
+        </article>
+
+        <article class="wishCard glass">
+          <h3>For the Future</h3>
+          <p>
+            May your days be full of small happy moments, big beautiful
+            milestones, and a forever kind of togetherness. 🌸
+          </p>
+        </article>
+
+        <article class="wishCard glass">
+          <h3>From All of Us</h3>
+          <p>
+            Keep laughing together, keep supporting each other, and keep
+            choosing love — every single day. Happy Anniversary! ✨
+          </p>
+        </article>
+
+        <article class="wishCard glass">
+          <h3>One Line Blessing</h3>
+          <p>
+            “May your love story always stay blessed, bright, and beautiful.” 🙏
+          </p>
+        </article>
+      </section>
+
+      <section class="glass footerCard">
+        <h2>Made with Love 💖</h2>
+        <p>Tap the music button on top if it didn’t start automatically.</p>
+        <div class="ctaRow">
+          <a class="btn" href="./memories.html">View Memories</a>
+          <a class="btn primary" href="./">Back to Home</a>
+        </div>
+      </section>
+
+      <canvas id="confetti"></canvas>
+    </main>
+
+    <script src="./assets/js/app.js"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        window.ANNIV.init({
+          page: "wishes",
+          imagesCount: 12,
+        });
+      });
+    </script>
+  </body>
+</html>
