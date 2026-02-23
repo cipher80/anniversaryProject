@@ -651,6 +651,72 @@
     };
   }
 
+  // ---- Time lock (opens on anniversary date) ----
+  function setupUnlockGate() {
+    // Local time unlock: 24 February 2026, 00:00
+    const unlockAt = new Date(2026, 1, 24, 0, 0, 0, 0);
+    const now = new Date();
+
+    // Optional preview bypass: append ?preview=1 in URL
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("preview") === "1") return false;
+
+    if (now >= unlockAt) return false;
+
+    const unlockDateText = unlockAt.toLocaleDateString(undefined, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    const unlockTimeText = unlockAt.toLocaleTimeString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    const gate = document.createElement("div");
+    gate.className = "lockGate";
+    gate.id = "lockGate";
+    gate.innerHTML = `
+      <div class="lockCard glass">
+        <div class="lockBadge">Love Locked</div>
+        <p class="lockNames">For Priya & Riddhikant</p>
+        <h2 class="lockTitle">Our Anniversary Surprise</h2>
+        <p class="lockInfo">This gift opens on <strong>${unlockDateText}</strong> at <strong>${unlockTimeText}</strong>.</p>
+        <p class="lockQuote">A little wait now, a beautiful memory forever.</p>
+        <div class="lockCountdown" id="lockCountdown">Calculating time...</div>
+      </div>
+    `;
+    document.body.appendChild(gate);
+
+    const countdownEl = document.getElementById("lockCountdown");
+    let timerId = null;
+
+    const pad = (n) => String(Math.max(0, n)).padStart(2, "0");
+    const tick = () => {
+      const diff = unlockAt.getTime() - Date.now();
+      if (diff <= 0) {
+        if (timerId) clearInterval(timerId);
+        gate.remove();
+        window.location.reload();
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = totalSeconds % 60;
+      if (countdownEl) {
+        countdownEl.textContent =
+          `Opens in ${days}d ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
+      }
+    };
+
+    tick();
+    timerId = window.setInterval(tick, 1000);
+    return true;
+  }
+
   // ---- Music helper (autoplay + fallback) ----
   function setupMusic() {
     const audio = $("bgMusic");
@@ -1221,6 +1287,8 @@
   // ---- Public API ----
   window.ANNIV = {
     init({ page, imagesCount = 12 }) {
+      if (setupUnlockGate()) return;
+
       setupMusic();
       startSnow($("confetti"));
 
