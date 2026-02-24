@@ -1157,3 +1157,129 @@ body.lock-active #lockGate {
     font-size: 48px;
   }
 }
+
+/* ---------- Mobile refinements ---------- */
+@media (max-width: 900px) {
+  .container {
+    width: 94vw;
+    padding: 16px 0 56px;
+  }
+
+  .topbar {
+    padding: 12px 4vw;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .brand {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .musicBtn {
+    margin-left: auto;
+  }
+  .nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+  }
+  .nav a {
+    flex: 0 0 auto;
+  }
+
+  .hero {
+    padding: 16px;
+    gap: 14px;
+  }
+  .photoFrame img {
+    height: 260px;
+  }
+
+  .gamesTabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabBtn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .wheel {
+    width: min(320px, 84vw);
+    height: min(320px, 84vw);
+  }
+  .wheelLabel {
+    width: 74px;
+    font-size: 10px;
+  }
+
+  .tttBoard {
+    width: min(360px, 92vw);
+    height: min(360px, 92vw);
+  }
+
+  .lockCard {
+    width: min(520px, 94vw);
+    padding: 22px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: clamp(24px, 8vw, 34px);
+  }
+
+  .pageHead {
+    padding: 14px 14px;
+  }
+  .pageHead h1 {
+    font-size: 24px;
+  }
+
+  .btn {
+    padding: 11px 14px;
+  }
+  .ctaRow .btn,
+  .panelActions .btn {
+    width: 100%;
+  }
+
+  #musicText {
+    display: none;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .tile {
+    min-height: 140px;
+  }
+
+  .guessImgFrame img {
+    height: 230px;
+  }
+  .yearGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lightboxInner {
+    width: 96vw;
+  }
+  .lbNav {
+    width: 40px;
+    height: 56px;
+    font-size: 26px;
+  }
+  .lbHint {
+    display: none;
+  }
+
+  .tttCell {
+    font-size: clamp(38px, 11vw, 52px);
+  }
+}
